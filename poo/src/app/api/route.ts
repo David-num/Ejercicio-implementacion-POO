@@ -34,6 +34,12 @@ export async function POST(request: NextRequest) {
       throw new Error("Invalid author length");
     }
 
+    try{
+        await sql`INSERT INTO public.post (title, description, author)VALUES (${title}, ${description}, ${author})`; 
+    }catch (error) {
+      throw new Error("Failed to save post");
+    }
+    
     return NextResponse.json(
       { message: "Data is valid" }
     );
