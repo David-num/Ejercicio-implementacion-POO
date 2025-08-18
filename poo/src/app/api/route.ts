@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import postgres from "postgres";
+
+const connectionString = "postgresql://postgres.edxdrjgaiwftvtpcyeii:laOSUDvlWF4l937H@aws-0-us-east-1.pooler.supabase.com:6543/postgres"
+const sql = postgres(connectionString  );
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,7 +29,7 @@ export async function POST(request: NextRequest) {
     if (typeof author !== "string") {
       throw new Error("Invalid author format");
     }
-    
+
     if (!(author.length > 0 && author.length <= 50)) {
       throw new Error("Invalid author length");
     }
