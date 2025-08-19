@@ -3,6 +3,7 @@ import PostRegister from "@/utils/post-register";
 import PostgresPostsRepository from "@/utils/postgres-post-repository";
 import PostGetAll from "@/utils/post-get";
 import PostEdition from "@/utils/post-edition"
+import PostDelete from "@/utils/post-delete"
 
 
 
@@ -58,6 +59,27 @@ export async function PUT(request: NextRequest) {
     
     return NextResponse.json(
       { message: "Data is valid" }
+    );
+
+  } catch (error) {
+    console.error("Error processing request:", error);
+    return NextResponse.json(
+      { error: "Error validating data" },
+      { status: 400 }
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+
+    const data = await request.json();
+
+    const register = new PostDelete(repository);
+    await register.dele(data.id);
+    
+    return NextResponse.json(
+      { message: "Information deleted" }
     );
 
   } catch (error) {
