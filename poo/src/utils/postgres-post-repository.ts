@@ -26,5 +26,23 @@ export default class PostgresPostsRepository implements PostRepository {
     }
   }
 
-
+  public async getAll(): Promise<{id: any,
+          title: any,
+          description: any,
+          author: any}[]>{
+      try {
+      const result = await this.sql`SELECT * FROM public.post`;
+      const posts = result.map((row: any) => {
+        return {
+          id: row.id,
+          title: row.title,
+          description: row.description,
+          author: row.author
+        };
+      });
+      return posts
+    } catch (error) {
+      throw new Error("Failed to get post");
+    }
+  }
 }
