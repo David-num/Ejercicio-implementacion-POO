@@ -11,7 +11,7 @@ export default class ValidPostTitle {
       throw new Error("Invalid title format");
     }
 
-    if (!(title.length > 0 && title.length <= 50)) {
+    if (!(title.length > 0 && title.length <=60)) {
       throw new Error("Invalid title length");
     }
   }

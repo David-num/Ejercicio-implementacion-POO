@@ -11,7 +11,7 @@ export default class ValidPostAuthor {
       throw new Error("Invalid author format");
     }
 
-    if (!(author.length > 0 && author.length <= 30)) {
+    if (!(author.length > 0 && author.length <= 50)) {
       throw new Error("Invalid author length");
     }
   }
