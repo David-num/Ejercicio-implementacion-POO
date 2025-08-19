@@ -14,14 +14,18 @@ export default class PostRegister {
     this.newPost = Post.create(title, description, author);
   }
   
-  public async run(data: Post): Promise<void> {
+  public async run(post: Post): Promise<void> {
 
     try {
       const connectionString = "postgresql://postgres.edxdrjgaiwftvtpcyeii:"+
       "laOSUDvlWF4l937H@aws-0-us-east-1.pooler.supabase.com:6543/postgres"
       const sql = postgres(connectionString);
 
-      await sql`INSERT INTO public.posts (title, description, author) VALUES (${data.title}, ${data.description}, ${data.author})`;
+      const title = post.title.value;
+      const description = post.description.value; 
+      const author = post.author.value;
+
+      await sql`INSERT INTO public.posts (title, description, author) VALUES (${title}, ${description}, ${author})`;
     } catch (error) {
       throw new Error("Failed to save post");
     }
