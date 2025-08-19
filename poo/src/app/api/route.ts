@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import PostRegister from "@/utils/post-register";
 import PostgresPostsRepository from "@/utils/postgres-post-repository";
 import PostGetAll from "@/utils/post-get";
+import PostEdition from "@/utils/post-edition"
 
 
 
@@ -42,6 +43,27 @@ export async function GET() {
     console.error("Error processing request:", error);
     return NextResponse.json(
       { error: "Error get" },
+      { status: 400 }
+    );
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+
+    const data = await request.json();
+
+    const register = new PostEdition(repository);
+    await register.edit(data.id ,data.title, data.description, data.author);
+    
+    return NextResponse.json(
+      { message: "Data is valid" }
+    );
+
+  } catch (error) {
+    console.error("Error processing request:", error);
+    return NextResponse.json(
+      { error: "Error validating data" },
       { status: 400 }
     );
   }

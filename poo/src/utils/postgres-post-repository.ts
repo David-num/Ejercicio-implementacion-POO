@@ -45,4 +45,20 @@ export default class PostgresPostsRepository implements PostRepository {
       throw new Error("Failed to get post");
     }
   }
+
+  public async update(postId: number, post:Post): Promise<void> {
+    try {
+      const title = post.title.value;
+      const description = post.description.value; 
+      const author = post.author.value;
+      await this.sql`
+        UPDATE public.post
+        SET title = ${title}, description = ${description}, author = ${author}
+        WHERE id = ${postId};
+      `;
+    } catch (error) {
+      throw new Error("Failed to update post");
+    }
+  }
 }
+
